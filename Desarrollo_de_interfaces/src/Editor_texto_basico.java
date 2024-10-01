@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,6 +30,10 @@ public class Editor_texto_basico {
 		Font fuente= area.getFont();
 		
 		JMenuBar bar = new JMenuBar();
+		JMenu archivo= new JMenu("Archivo");
+		JMenu estilo= new JMenu("Archivo");
+		
+		
 		
 		
 		//	String [] fuentess= GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
