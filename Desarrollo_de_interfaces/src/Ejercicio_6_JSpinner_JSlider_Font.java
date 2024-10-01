@@ -2,6 +2,7 @@ import java.awt.Font;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -57,7 +58,7 @@ public class Ejercicio_6_JSpinner_JSlider_Font extends JFrame {
 				
 			}
 		});
-		
+		//ComboBoxModel<String>
 		
 		panel.add(pane);
 		panel.add(spinner);
