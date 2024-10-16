@@ -1,0 +1,127 @@
+package eventos;
+
+import java.awt.GraphicsConfiguration;
+import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.util.List;
+import java.util.ArrayList;
+import java.awt.*;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+
+public class Paintt extends JPanel {
+static String tipo;
+	
+	private List <Linea> lineas = new ArrayList<>(); // Lista para almacenar los puntos dibujados
+	private Linea linea = new Linea();
+
+	public Paintt() throws HeadlessException {
+
+		// Manejador del evento cuando el mouse es presionado
+		addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				linea.points.add(e.getPoint()); // Agrega el punto donde se presionó el mouse
+				repaint(); // Redibuja el panel
+			}
+		});
+
+		// Manejador del evento cuando el mouse se mueve con el botón presionado
+		addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				linea.points.add(e.getPoint()); // Agrega los puntos donde el mouse se arrastra
+				repaint(); // Redibuja el panel
+			}
+		});
+
+		addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				lineas.add(linea);
+				linea.points.clear();
+				repaint(); 
+			}
+		});
+	}
+	
+
+	
+	// Metodo para dibujar los puntos
+	protected void paintComponent(Graphics g) {
+		super.paintComponents(g); // Llama al metodo paintComponent de la clase padre
+
+		// Establecer el color y dibujar todas las lineas entre puntos
+		g.setColor(Color.BLACK);
+/*
+		for (Linea linear : lineas) {
+			for (int f = 1; f < linear.points.size(); f++) {
+				Point p1 = linear.points.get(f - 1);
+				Point p2 = linear.points.get(f);
+				g.drawLine(p1.x, p1.y, p2.x, p2.y); // Dibuja lineas entre los puntos consecutivos
+			}
+		}
+
+		for (int i = 1; i < linea.points.size(); i++) {
+			Point p1 = linea.points.get(i - 1);
+			Point p2 = linea.points.get(i);
+			g.drawLine(p1.x, p1.y, p2.x, p2.y); // Dibuja lineas entre los puntos consecutivos
+		}
+		//JcolorChooser*/
+		
+	/*	switch (tipo) {
+		case "circulo": {*/
+			Point p1 = linea.points.get(0);
+			Point p2 = linea.points.get(linea.getPoints().size());
+			
+			drawCircle(g,p1.x,p1.y,50);
+			
+	/*		break;
+		}
+		
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + tipo);
+		}*/
+		
+		
+	}
+
+	public static void drawCircle(Graphics g, int x, int y, int radius) {
+
+		  int diameter = radius * 2;
+
+		  //shift x and y by the radius of the circle in order to correctly center it
+		  g.fillOval(x - radius, y - radius, diameter, diameter); 
+
+		}
+	
+	// Crear el JFrame con el lienzo de dibujo
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Paint Basico en Java");
+		Paintt paintPannel = new Paintt();
+		JButton circuloButton= new JButton("Circulo");
+		
+		frame.add(circuloButton ,BorderLayout.NORTH);
+		
+		circuloButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tipo="circulo";
+				
+			}
+		});
+			
+		frame.add(paintPannel);
+		frame.setSize(800, 600); // Tamaño del lienzo
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true); // Mostrar la ventana
+	}
+	
+
+}
